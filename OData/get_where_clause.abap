@@ -1,4 +1,4 @@
-method vendaset_get_entity.
+method vendaset_get_entityset.
 
 //GET WHERE clause automatically, from service
 
