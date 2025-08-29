@@ -1,0 +1,37 @@
+<edmx:Edmx Version="1.0">
+<edmx:DataServices m:DataServiceVersion="2.0">
+<Schema Namespace="Z659_PROJECT_SRV" xml:lang="pt" sap:schema-version="1">
+<Annotation Term="Core.SchemaVersion" String="1.0.0"/>
+<EntityType Name="Project1Header" sap:content-version="1">
+<Key>
+<PropertyRef Name="ProjectExternalCode"/>
+</Key>
+<Property Name="ProjectExternalCode" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+<Property Name="fieldH1" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+<NavigationProperty Name="Project1Item" Relationship="Z659_PROJECT_SRV.Project1ToItem" FromRole="FromRole_Project1ToItem" ToRole="ToRole_Project1ToItem"/>
+</EntityType>
+<EntityType Name="Project1Item" sap:content-version="1">
+<Key>
+<PropertyRef Name="ProjectExternalCode"/>
+<PropertyRef Name="ProjectExternalCodeItem"/>
+</Key>
+<Property Name="ProjectExternalCode" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+<Property Name="ProjectExternalCodeItem" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+</EntityType>
+<Association Name="Project1ToItem" sap:content-version="1">
+<End Type="Z659_PROJECT_SRV.Project1Header" Multiplicity="1" Role="FromRole_Project1ToItem"/>
+<End Type="Z659_PROJECT_SRV.Project1Item" Multiplicity="*" Role="ToRole_Project1ToItem"/>
+</Association>
+<EntityContainer Name="Z659_PROJECT_SRV_Entities" m:IsDefaultEntityContainer="true" sap:supported-formats="atom json xlsx">
+<EntitySet Name="project1HeaderSet" EntityType="Z659_PROJECT_SRV.Project1Header" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1"/>
+<EntitySet Name="Project1ItemSet" EntityType="Z659_PROJECT_SRV.Project1Item" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1"/>
+<AssociationSet Name="Project1ToItem_AssocSet" Association="Z659_PROJECT_SRV.Project1ToItem" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+<End EntitySet="project1HeaderSet" Role="FromRole_Project1ToItem"/>
+<End EntitySet="Project1ItemSet" Role="ToRole_Project1ToItem"/>
+</AssociationSet>
+</EntityContainer>
+<atom:link rel="self" href="http://lnl-s4h.opustech.com.br:8000/sap/opu/odata/sap/Z659_PROJECT_SRV/$metadata"/>
+<atom:link rel="latest-version" href="http://lnl-s4h.opustech.com.br:8000/sap/opu/odata/sap/Z659_PROJECT_SRV/$metadata"/>
+</Schema>
+</edmx:DataServices>
+</edmx:Edmx>
