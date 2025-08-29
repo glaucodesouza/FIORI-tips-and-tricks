@@ -1,0 +1,6 @@
+  method /IWBEP/IF_MGW_APPL_SRV_RUNTIME~CHANGESET_BEGIN.
+
+"INSTANCIEI UMA CLASSE PARA ARMAZENAR CODIGOS DOS MATERIAIS
+" Não precisa preencher para executar o batch
+
+  endmethod.
