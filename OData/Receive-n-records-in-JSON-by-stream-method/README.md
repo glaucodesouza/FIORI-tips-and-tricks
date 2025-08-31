@@ -1,6 +1,6 @@
 # Steps to receive N records by JSON to internal table (easy)
 
-# XXX IMPORTANT XXX
+# XXX IMPORTANT XXX (DO NOT WORK PROPERLY)
 It works for receivin JSON records in sap, BUT CAN NOT give success answer.  
 Only give 500 error like: Invalid or no mapping to system data types found  
 
