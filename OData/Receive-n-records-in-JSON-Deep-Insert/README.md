@@ -15,16 +15,8 @@
       DATA:    ToProject1Item TYPE STANDARD TABLE OF ZCL_Z659_PROJECT_mpc=>ts_project1item WITH DEFAULT KEY.
       DATA: END OF ls_project.
   
-  *    DATA: ls_vendas_cab TYPE ztab_vendas_cab.
-  *    DATA: lt_itens TYPE TABLE OF ztab_vendas_item.
-  
       DATA(lv_entityset_name) = io_tech_request_context->get_entity_set_name( ).
       lv_entityset_name = 'project1HeaderSet'.
-  *
-  *
-  *    CASE lv_entityset_name.
-  *
-  *      WHEN 'VendaSet'.
   
           io_data_provider->read_entry_data(
           IMPORTING
@@ -44,7 +36,7 @@
           CHANGING
             cr_data = er_deep_entity ).
   
-  *    ENDCASE.
+
   
     ENDMETHOD.
 
