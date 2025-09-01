@@ -1,6 +1,25 @@
 # Receive N records via JSON to Deep Insert 
-
+This is an example of receiving mass data as JSON in SEGW OData for abap
 ## (Dummy Header and real Items)
+
+## Premises
+- OData for abap on SEGW
+- Receiving N records as JSON in BODY
+- Sender must configure Header Content-Type = application/json
+- Sender must configure Header accept = application/json
+- Sender must configure Body with header "dummy"
+- Sender must configure Body with items as ToItem property navigation/association
+- Example of Body
+  
+         {
+          "ProjectExternalCode": "ID-123", //this could be empty, no problem
+          "Project1Item": { //ould be e.g. ToItem
+            "results": [ //Odata need result word here
+              { "ProjectExternalCode": "projectA", "ProjectExternalCodeItem": "field A" },
+              { "ProjectExternalCode": "projectB", "ProjectExternalCodeItem": "field B" }
+            ]
+          }
+        }
 
 ## SEGW
 
