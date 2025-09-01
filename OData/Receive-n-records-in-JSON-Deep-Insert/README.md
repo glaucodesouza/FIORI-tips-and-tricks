@@ -7,7 +7,7 @@ This is an example of receiving mass data as JSON in SEGW OData for abap
 - Receiving N records as JSON in BODY
 - Sender must configure Header Content-Type = application/json
 - Sender must configure Header accept = application/json
-- Sender must configure Body with header "dummy"
+- Sender must configure Body with header "dummy" ("ProjectExternalCode": "ID-123")
 - Sender must configure Body with items as ToItem property navigation/association
 - Example of Body
   
