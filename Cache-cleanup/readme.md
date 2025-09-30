@@ -24,13 +24,13 @@ Goto → HTTP Plugin → Server Cache → Invalidate Globally
 🔧 4. Clear UI2 and SAPUI5 Caches
 Use transaction SE38 to run the following reports:
 
-/UI2/INVALIDATE_GLOBAL_CACHES – Clears global UI2 caches.
-/UI2/INVALIDATE_CLIENT_CACHES – Clears client-side UI2 caches.
-/UI2/CHIP_SYNCHRONIZE_CACHE – Synchronizes CHIP cache.
-/UI2/DELETE_CACHE_AFTER_IMP – Deletes cache after import.
-/UI2/DELETE_CACHE – Deletes general UI2 cache.
-/UI5/APP_INDEX_CALCULATE – Recalculates SAPUI5 application index (can be full or delta).
-
+- /UI2/INVALIDATE_GLOBAL_CACHES – Clears global UI2 caches.  
+- /UI2/INVALIDATE_CLIENT_CACHES – Clears client-side UI2 caches.  
+- /UI2/CHIP_SYNCHRONIZE_CACHE – Synchronizes CHIP cache.  
+- /UI2/DELETE_CACHE_AFTER_IMP – Deletes cache after import.  
+- /UI2/DELETE_CACHE – Deletes general UI2 cache.  
+- /UI5/APP_INDEX_CALCULATE – Recalculates SAPUI5 application index (can be full or delta).
+  
 
 🔧 5. Clear Browser Cache
 
