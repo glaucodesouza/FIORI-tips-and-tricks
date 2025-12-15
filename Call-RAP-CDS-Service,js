@@ -1,0 +1,209 @@
+sap.ui.define([
+		'sap/ui/core/mvc/Controller',
+		'sap/m/MessageBox',
+		'sap/ui/core/date/UI5Date',
+        "sap/ui/model/Filter",
+        "sap/ui/model/FilterOperator"
+],
+function (Controller, MessageBox, UI5Date, Filter, FilterOperator) {
+    "use strict";
+
+    return Controller.extend("zpmdispalochrtr.controller.View1", {
+        
+        onInit: function () {
+
+            //----------------------------------------------
+            // Set planning calendar TYPE
+            //----------------------------------------------
+            // Set default view for PlanningCalendar
+            this.byId("PC1").setBuiltInViews(["Day"]);
+
+            // Set default selected key for Select control
+            this.byId("_IDGenSelect").setSelectedKey("Day");
+
+            this.readData();
+
+        },
+
+        transformAppointments: function (aAppointments, that) {
+            // Group by Employee and map fields
+            let mEmployees = {};
+            aAppointments.forEach(function(item) {
+                if (!mEmployees[item.NomeCompleto]) {
+                    mEmployees[item.NomeCompleto] = {
+                        pic: "sap-icon://employee",
+                        name: item.NomeCompleto,
+                        role: item.IdFuncionario,
+                        appointments: []
+                    };
+                }
+
+                let start = item.DataInicioBox;
+                let end = item.DataFimBox;
+                start = that.formatDateToGMTStringStart(start);
+                end = that.formatDateToGMTStringEnd(end);
+
+                mEmployees[item.NomeCompleto].appointments.push({
+                    start: start,
+                    end: end,
+                    title: item.Box,
+                    type: "None",
+                    tentative: false
+                });
+            });
+            return Object.values(mEmployees);
+
+        },
+
+        formatDateToGMTStringStart: function (oDate) {
+            // Verifica se é um objeto Date válido
+            if (!(oDate instanceof Date) || isNaN(oDate.getTime())) {
+                return "";
+            }
+
+            // Força a data para UTC e retorna no formato desejado
+            // toString() usa o fuso local, então usamos toUTCString() e adaptamos
+            let sUTC = oDate.toUTCString(); // Ex.: "Tue, 04 Nov 2025 21:00:00 GMT"
+            
+            // Remove vírgula e ajusta para o estilo solicitado
+            // "Tue Nov 04 2025 21:00:00 GMT-0000"
+            // parts = ["Tue,", "04", "Nov", "2025", "21:00:00", "GMT"]
+            let parts = sUTC.split(" ");            
+
+            let ret = UI5Date.getInstance(parts[3], oDate.getMonth(), parts[1],0,0,0);
+            return ret;
+
+        },
+
+        formatDateToGMTStringEnd: function (oDate) {
+            // Verifica se é um objeto Date válido
+            if (!(oDate instanceof Date) || isNaN(oDate.getTime())) {
+                return "";
+            }
+
+            // Força a data para UTC e retorna no formato desejado
+            // toString() usa o fuso local, então usamos toUTCString() e adaptamos
+            let sUTC = oDate.toUTCString(); // Ex.: "Tue, 04 Nov 2025 21:00:00 GMT"
+            
+            // Remove vírgula e ajusta para o estilo solicitado
+            // "Tue Nov 04 2025 21:00:00 GMT-0000"
+            // parts = ["Tue,", "04", "Nov", "2025", "21:00:00", "GMT"]
+            let parts = sUTC.split(" ");            
+
+            let ret = UI5Date.getInstance(parts[3], oDate.getMonth(), parts[1],23,59,59);
+            return ret;
+
+        },
+
+        onFilterEmployee: function () {
+
+            this.readData();
+
+        },
+        
+        handleAppointmentSelect: function (oEvent) {
+            let oAppointment = oEvent.getParameter("appointment");
+            if (oAppointment) {
+                MessageBox.show("'" + oAppointment.getTitle() + "' ");
+            }
+        },
+
+        handleSelectionFinish: function(oEvent) {
+            let aSelectedKeys = oEvent.getSource().getSelectedKeys();
+            this.byId("PC1").setBuiltInViews(aSelectedKeys);
+        },
+        
+        handleSelectChange: function(oEvent) {
+
+            let sSelectedKey = oEvent.getParameter("selectedItem").getKey();
+            this.byId("PC1").setBuiltInViews([sSelectedKey]);
+            
+            this.readData();
+
+        },
+
+        onCalendarWeekNUmberingSelect: function (oEvent) {
+            this.byId("PC1").setCalendarWeekNumbering(oEvent.getParameters().selectedItem.getKey());
+        },
+
+        readTipoCalend: function(sTipoCalend){
+
+            let sTipoCalendChar
+            switch (sTipoCalend) {
+                case 'Day':
+                    sTipoCalendChar = 'D';
+                    break;            
+                case '1 week':
+                    sTipoCalendChar = 'W';
+                    break;
+                default:
+                    sTipoCalendChar = 'W';
+                    break;
+            }
+
+            return sTipoCalendChar;
+        },
+
+        readData: function(){
+
+            let sEmployee = this.byId("employeeInput").getValue();
+            let sCentro = this.byId("centroInput").getValue();
+            let sCentrotrabalho = this.byId("centrotrabalhoInput").getValue();
+            let sIdFuncionario = this.byId("idFuncionarioInput").getValue();
+            
+            let aFilters = [];
+
+            //----------------------------------------------
+            // Filters
+            //----------------------------------------------
+            
+            if (sCentro != '') {
+                aFilters.push(new Filter("Centro", FilterOperator.EQ, sCentro));
+            }
+            
+            if (sCentrotrabalho != '') {
+                aFilters.push(new Filter("CentroTrabalho", FilterOperator.EQ, sCentrotrabalho));
+            }
+            
+            if (sEmployee != '') {
+                aFilters.push(new Filter("NomeCompleto", FilterOperator.Contains, sEmployee));
+            }
+
+            if (sIdFuncionario != '') {
+                aFilters.push(new Filter("IdFuncionario", FilterOperator.EQ, sIdFuncionario));
+            }
+            
+            //Read value
+            let sSelectedKey = this.byId("_IDGenSelect").getSelectedKey();
+
+            // read the Key of planing calendar, will be used to read OData (CDS view), for values: Day, 1 week, 1 month
+            let tipoCalend = this.readTipoCalend(sSelectedKey);
+
+            //----------------------------------------------
+            // Read data
+            //----------------------------------------------
+            
+            let oODataModel = new sap.ui.model.odata.v2.ODataModel("/sap/opu/odata/sap/ZALOC_TRAB_O2/");
+            this.getView().setModel(oODataModel);
+
+            oODataModel.read(`/capacidadeAlocada(p_visaobox='${tipoCalend}')/Set`, {
+                filters: aFilters,
+                success: function (oData) {
+                    let aPeople = this.transformAppointments(oData.results, this);
+                    let oJSONModel = new sap.ui.model.json.JSONModel({
+                        startDate: new Date(),
+                        people: aPeople
+                    });
+                    this.getView().setModel(oJSONModel, "calendar");
+                }.bind(this),
+                error: function (err) {
+                    // let oRet = JSON.parse(err.message);
+                    sap.m.MessageToast.show(err.message, {
+                        duration: 4000
+                    });
+                }.bind(this)
+            });
+
+        }
+    });
+});
