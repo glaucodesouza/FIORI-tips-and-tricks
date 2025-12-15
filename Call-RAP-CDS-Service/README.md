@@ -1,4 +1,4 @@
-# How to call CDS RAP Service
+# How to call CDS RAP Service, from Freestyle app controller
             //----------------------------------------------
             // Read data
             //----------------------------------------------
