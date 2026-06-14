@@ -1,6 +1,6 @@
 # Matchcode for filter field
 
-View (Filter input field)
+## View (Filter input field)
 
       <f:header>
           <f:DynamicPageHeader id="_IDGenDynamicPageHeader">
@@ -35,7 +35,7 @@ View (Filter input field)
       </f:header>
 
 
-Controller (matchcode function)
+## Controller (matchcode function)
 
       onValueHelpRequestEmpregado: function (oEvent) {
           //------------------------------------------------------------------
