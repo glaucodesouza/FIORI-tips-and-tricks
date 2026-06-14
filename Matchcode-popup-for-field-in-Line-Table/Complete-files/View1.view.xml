@@ -1,0 +1,290 @@
+<mvc:View controllerName="zhr.apontarocorrencias.controller.Ocorrencias"
+    xmlns="sap.m" 
+    xmlns:mvc="sap.ui.core.mvc" 
+    xmlns:core="sap.ui.core" 
+    xmlns:f="sap.f"
+    xmlns:smartTable="sap.ui.comp.smarttable" 
+    xmlns:fb="sap.ui.comp.filterbar" 
+>
+    <!-- <Page id="page" title="{i18n>title}">
+    </Page> -->
+
+    <f:DynamicPage id="dynamicPage"
+            class="sapUiNoContentPadding">
+        <f:title>
+            <f:DynamicPageTitle id="_IDGenDynamicPageTitle1">
+                <f:heading>
+                    <Title id="_IDGenTitle" text="Apontamentos"/>
+                </f:heading>
+            </f:DynamicPageTitle>
+        </f:title>
+
+        <f:header>
+            <f:DynamicPageHeader id="_IDGenDynamicPageHeader">
+                <f:content>
+
+                    <fb:FilterBar id="filterBar" header="Filtros" search=".onPesquisar" showRestoreButton="true" visible="{mdlFiltrosVisiveis>/visibleMode}" useToolbar="true">
+                        <fb:filterGroupItems>
+                            <fb:FilterGroupItem id="_IDGenFilterGroupItem" name="filterEmpregado" label="Empregado" groupName="Group1" visibleInFilterBar="true">
+                                <fb:control>
+                                    <Input id="inputEmpregado" 
+                                        placeholder="" 
+                                        maxLength="10"
+                                        showValueHelp="true"
+                                        valueHelpRequest="onValueHelpRequestEmpregado"/>
+                                </fb:control>
+                            </fb:FilterGroupItem>
+
+                            <fb:FilterGroupItem id="_IDGenFilterGroupItem1" name="filterTipoOcorrencia" label="Tipo de Ocorrência" groupName="Group1" visibleInFilterBar="true">
+                                <fb:control>
+                                    <Input id="inputTipoOcorrencia" 
+                                        placeholder=""
+                                        showValueHelp="true"
+                                        valueHelpRequest="onValueHelpRequestTipoOcorrencia"/>
+                                </fb:control>
+                            </fb:FilterGroupItem>
+
+                        </fb:filterGroupItems>
+                    </fb:FilterBar>
+
+                </f:content>
+            </f:DynamicPageHeader>
+        </f:header>
+        <f:content>
+            <VBox id="_IDGenVBox1"
+                class="sapUiNoContentPadding">
+                <smartTable:SmartTable id="smartTable" 
+                
+                tableBindingPath="mdlOcorrenciasFiltradas>/"
+                tableType="ResponsiveTable" 
+                useVariantManagement="true"
+                useTablePersonalisation="false" 
+                header="Lista de Materiais" 
+                showRowCount="true" 
+                enableAutoBinding="true" 
+                class="sapUiNoContentPadding"
+                persistencyKey="SmartFilter_Explored" 
+                beforeRebindTable="onBeforeRebindTable" 
+                initiallyVisibleFields="Empregado, Data, HoraInicio, HoraFim, Diferenca, TipoOcorrencia, CodigoFrequencia, ObservacaoSolicitacao">
+                    
+                    <smartTable:layoutData>
+                        <FlexItemData id="_IDGenFlexItemData" growFactor="1" baseSize="0%"/>
+                    </smartTable:layoutData>
+                    
+                    <Table id="table" mode="MultiSelect" items="{mdlOcorrenciasFiltradas>/}" class="sapUiResponsiveTable compactTable">
+                        <headerToolbar>
+                            <OverflowToolbar id="idOFT">
+                                <!-- TIMELINE INI -->
+                                <!-- Data clicada -->
+                                <Text id="txtDataTimeline" text="{mdlTimeline>/timelineData}"/>
+                                <!-- Timeline na tela -->
+                                <VBox id="_IDGenVBox" class="sapUiSmallMargin">
+                                    <!-- Container da timeline -->
+                                    <HBox id="timelineBox" class="timelineContainer">
+                                    <core:HTML id="timelineHtml" content="{mdlTimeline>/timelineHtml}" visible="false"/>
+                                    </HBox>
+                                </VBox>
+                                <!-- TIMELINE FIM -->
+                                <ToolbarSpacer id="idTBS"/>
+                                <!-- BOTAO CALENDARIO INI -->
+                                <Button id="btnCalendarioStatus" text="Calendário" press="onAbrirFragmentCalendarioStatus"/>
+                                <!-- BOTAO CALENDARIO FIM -->
+                                <Text id="txtPeriodo" text="Período:"/>
+
+                                <Select id="cmbPeriodos"
+                                    change="onComboBoxPeriodosChange"
+                                    items="{mdlPeriodos>/}"
+                                    width="300px">
+                                    
+                                    <items>
+                                        <core:Item id="cmbPeriodosItem" key="{key}" text="{text}"/>
+                                    </items>
+                                </Select>
+
+                                <Button id="button" text="Menu" press=".onMenuPress" />
+                            </OverflowToolbar>
+                        </headerToolbar>
+
+                        <columns>
+
+                            <Column id="col00" width="90px">
+                                <Text id="txtStatus0" text="Status"/>
+                            </Column>
+
+                            <Column id="col1" width="100px">
+                                <customData>
+                                    <core:CustomData xmlns:core="sap.ui.core" value="{columnKey: 'Empregado', leadingProperty: 'Empregado', columnIndex: 1 }"/>
+                                </customData>
+                                <Text id="txtEmpregado0" text="Empregado"/>
+                            </Column>
+                            
+                            <Column id="col2" width="105px">
+                                <customData>
+                                    <core:CustomData xmlns:core="sap.ui.core" value="{columnKey: 'Data', leadingProperty: 'Data', columnIndex: 2 }"/>
+                                </customData>
+                                <Text id="txtData0" text="Data"/>
+                            </Column>
+
+                            <Column id="col21" width="50px">
+                                <customData>
+                                    <core:CustomData xmlns:core="sap.ui.core" value="{columnKey: 'Contador', leadingProperty: 'HoraInicio', columnIndex: 3 }"/>
+                                </customData>
+                                <Text id="txtContador0" text="Cont."/>
+                            </Column>
+
+                            <Column id="col3" width="75px">
+                                <customData>
+                                    <core:CustomData xmlns:core="sap.ui.core" value="{columnKey: 'HoraInicio', leadingProperty: 'HoraInicio', columnIndex: 3 }"/>
+                                </customData>
+                                <Text id="txtHoraInicio0" text="Hora Início"/>
+                            </Column>
+
+                            <Column id="col4" width="75px">
+                                <customData>
+                                    <core:CustomData xmlns:core="sap.ui.core" value="{columnKey: 'HoraFim', leadingProperty: 'HoraFim', columnIndex: 4 }"/>
+                                </customData>
+                                <Text id="txtHoraFim0" text="Hora Fim"/>
+                            </Column>
+
+                            <Column id="col5" width="70px">
+                                <customData>
+                                    <core:CustomData xmlns:core="sap.ui.core" value="{columnKey: 'Diferenca', leadingProperty: 'Diferenca', columnIndex: 5 }"/>
+                                </customData>
+                                <Text id="txtDiferenca0" text="Dif."/>
+                            </Column>
+
+                            <Column id="col6" width="100px">
+                                <customData>
+                                    <core:CustomData xmlns:core="sap.ui.core" value="{columnKey: 'TipoOcorrencia', leadingProperty: 'TipoOcorrencia', columnIndex: 6 }"/>
+                                </customData>
+                                <Text id="txtTipoOcorrencia0" text="Tipo de Ocorrência"/>
+                            </Column>
+
+                            <!-- <Column id="col7" width="225px">
+                                <customData>
+                                    <core:CustomData xmlns:core="sap.ui.core" value="{columnKey: 'CodigoFrequencia', leadingProperty: 'CodigoFrequencia', columnIndex: 7 }"/>
+                                </customData>
+                                <Text id="txtCodigoFrequencia0" text="Justificativa"/>
+                            </Column> -->
+
+                            <Column id="col71" width="225px">
+                                <customData>
+                                    <core:CustomData xmlns:core="sap.ui.core" value="{columnKey: 'JustificativaTexto', leadingProperty: 'JustificativaTexto', columnIndex: 7 }"/>
+                                </customData>
+                                <Text id="txtJustificativaTexto0" text="Justificativa"/>
+                            </Column>
+
+                            <Column id="col8" width="120px">
+                                <customData>
+                                    <core:CustomData xmlns:core="sap.ui.core" value="{columnKey: 'ObservacaoSolicitacao', leadingProperty: 'ObservacaoSolicitacao', columnIndex: 8 }"/>
+                                </customData>
+                                <Text id="txtObservacaoSolicitacao0" text="Observação da Solicitação"/>
+                            </Column>
+
+                            <Column id="col9" width="35px">
+                                <Text id="txtEditar0" text=""/>
+                            </Column>
+
+                            <Column id="col10" width="35px">
+                                <Text id="txtSalvar0" text=""/>
+                            </Column>
+                            
+                            <Column id="col11" width="35px">
+                                <Text id="txtCancelar0" text=""/>
+                            </Column>
+                            
+                        </columns>
+                        <items>
+                            <ColumnListItem id="_IDGenColumnListItem" type="Navigation" press="onTableLinePress">
+                                <cells>
+
+                                    <ObjectStatus
+                                        id="statusEmpregado"
+                                        text="{path: 'mdlOcorrenciasFiltradas>Status', formatter: '.formatter.statusText'}"
+                                        icon="{path: 'mdlOcorrenciasFiltradas>Status', formatter: '.formatter.statusIcon'}"
+                                        state="{path: 'mdlOcorrenciasFiltradas>Status', formatter: '.formatter.statusState'}" />
+                                        
+                                    <Input id="txtEmpregado" value="{mdlOcorrenciasFiltradas>Empregado}" editable="{mdlOcorrenciasFiltradas>editMode}"/>
+
+                                    <Input id="txtData" value="{
+                                                path: 'mdlOcorrenciasFiltradas>Data',
+                                                formatter: '.formatter.formatDateBR'
+                                            }" editable="{mdlOcorrenciasFiltradas>editMode}"/>
+                                    
+                                    <Input id="txtContador" value="{
+                                                path: 'mdlOcorrenciasFiltradas>Contador'
+                                            }" editable="false"/>
+
+                                    <Input id="txtHoraInicio" value="{
+                                                path: 'mdlOcorrenciasFiltradas>HoraInicio',
+                                                formatter: '.formatter.formatTimeFromMs'
+                                            }" editable="{mdlOcorrenciasFiltradas>editMode}"/>
+
+                                    <Input id="txtHoraFim" value="{
+                                                path: 'mdlOcorrenciasFiltradas>HoraFim',
+                                                formatter: '.formatter.formatTimeFromMs'
+                                            }" editable="{mdlOcorrenciasFiltradas>editMode}"/>          
+                                    
+                                    <Input id="txtDiferenca" value="{mdlOcorrenciasFiltradas>Diferenca} " editable="{mdlOcorrenciasFiltradas>editMode}"/>
+
+                                    <Input id="txtTipoOcorrencia" value="{mdlOcorrenciasFiltradas>TipoOcorrencia}" editable="{mdlOcorrenciasFiltradas>editMode}"/>
+
+                                    <!-- <Input id="inputJustificativa" 
+                                        value="{mdlOcorrenciasFiltradas>Justificativa}"
+                                        placeholder=""
+                                        showValueHelp="true"
+                                        valueHelpRequest="onValueHelpRequestCodigoFrequencia"
+                                        editable="{mdlOcorrenciasFiltradas>editMode}"/> -->
+
+                                    <Input id="inputJustificativaTexto" 
+                                        value="{mdlOcorrenciasFiltradas>JustificativaTexto}"
+                                        placeholder=""
+                                        showValueHelp="true"
+                                        valueHelpOnly="true"
+                                        valueHelpRequest="onValueHelpRequestCodigoFrequencia"
+                                        editable="{mdlOcorrenciasFiltradas>editMode}"/>
+                                    
+                                    <!-- NÃO USARÁ MAIS COMBOBOX POIS USAREMOS MATCH CODE DIRETO NO CAMPO. -->
+                                    <!-- <ComboBox id="cmbCodigoFrequencia" 
+                                            items="{mdlCodigosFrequencia>/}" 
+                                            selectedKey="{mdlOcorrenciasFiltradas>CodigoFrequencia}"
+                                            editable="{mdlOcorrenciasFiltradas>editMode}" 
+                                            width="100%">
+                                        <items>
+                                            <core:Item id="cmbCodigoFrequenciaItem" 
+                                                        key="{mdlCodigosFrequencia>Codigo}"
+                                                        text="{mdlCodigosFrequencia>Codigo} - {mdlCodigosFrequencia>Descricao}" />
+                                        </items>
+                                    </ComboBox> -->
+
+                                    <TextArea 
+                                        id="txtObservacaoSolicitacao" 
+                                        value="{mdlOcorrenciasFiltradas>Observacao}" 
+                                        editable="{mdlOcorrenciasFiltradas>editMode}"
+                                        rows="2"
+                                        maxLength="72"
+                                        width="120px"
+                                        growing="true"
+                                        growingMaxLines="3"/>
+
+                                    <Button id="btnEditar" press="onEditarLinha" icon="sap-icon://edit"/>
+                                    <Button id="btnSalvar" press="onSalvarLinha" icon="sap-icon://save"/>
+                                    <Button id="btnCancelar" press="onCancelarLinha" icon="sap-icon://cancel"/>
+
+                                </cells>
+                            </ColumnListItem>
+                        </items>
+                    </Table>
+                </smartTable:SmartTable>
+            
+                <!-- Botões abaixo -->
+                <Toolbar id="_IDGenToolbar1" design="Transparent">
+                    <ToolbarSpacer id="_IDGenToolbarSpacer"/>
+                    <Button id="_IDGenButton5" text="Salvar em massa" press="onSalvarEmMassa"/>
+                    <Button id="_IDGenButton6" text="Inserir Ocorrência" press="onAbrirFragmentCriarOcorrencia"/>
+                </Toolbar>
+            </VBox>
+        </f:content>
+
+    </f:DynamicPage>
+</mvc:View>
