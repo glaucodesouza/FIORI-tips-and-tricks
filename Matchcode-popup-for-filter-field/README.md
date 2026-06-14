@@ -1,5 +1,7 @@
 # Matchcode for filter field
-Ler dados de um modelo local.
+- Ler dados de um modelo local mdlOcorrencias ou mdlOcorrenciasFiltradas  
+- Mostrar um popup com os valores (empregado + Nome Empregado  
+- Retornar a chave da linha clicada p/ o campo InputEmpregado  
 
 ## View (Filter input field)
 
