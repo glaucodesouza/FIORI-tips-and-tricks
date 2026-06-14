@@ -1,0 +1,14 @@
+      <!-- <Input id="inputJustificativa" 
+          value="{mdlOcorrenciasFiltradas>Justificativa}"
+          placeholder=""
+          showValueHelp="true"
+          valueHelpRequest="onValueHelpRequestCodigoFrequencia"
+          editable="{mdlOcorrenciasFiltradas>editMode}"/> -->
+
+      <Input id="inputJustificativaTexto" 
+          value="{mdlOcorrenciasFiltradas>JustificativaTexto}"
+          placeholder=""
+          showValueHelp="true"
+          valueHelpOnly="true"
+          valueHelpRequest="onValueHelpRequestCodigoFrequencia"
+          editable="{mdlOcorrenciasFiltradas>editMode}"/>
