@@ -1,0 +1,12 @@
+
+                    <fb:FilterBar id="filterBar" header="Filtros" search=".onPesquisar" showRestoreButton="true" visible="{mdlFiltrosVisiveis>/visibleMode}" useToolbar="true">
+                        <fb:filterGroupItems>
+                            <fb:FilterGroupItem id="_IDGenFilterGroupItem" name="filterEmpregado" label="Empregado" groupName="Group1" visibleInFilterBar="true">
+                                <fb:control>
+                                    <Input id="inputEmpregado" 
+                                        placeholder="" 
+                                        maxLength="10"
+                                        showValueHelp="true"
+                                        valueHelpRequest="onValueHelpRequestEmpregado"/>
+                                </fb:control>
+                            </fb:FilterGroupItem>
